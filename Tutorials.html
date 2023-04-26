@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leo Yi's Portfolio | Tutorials</title>
+
+    <link rel="stylesheet" href="Tutorials.css">
+    <script src="Tutorials.js"></script>
+
+</head>
+<body>
+    <button onclick="topFunction()" id="myBtn" title="Go to top">&#8593;</button>
+    <div class="navbar">
+        <a href="Portfolio.html">Home</a>
+        <a href="AboutMe.html">About Me</a>
+        <a href="Tutorials.html">Tutorials</a>
+        <a href="Projects.html">Projects</a>
+        <a href="Bibliography.html">Bibliography</a>
+    </div>
+    <br>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#section1">OOP &nbsp;</a>
+        <a href="#section2">Arrays &nbsp;</a>
+        <a href="#section3">Arraylists &nbsp;</a>
+        <a href="#section4">Searching and <br> Sorting &nbsp;</a>
+        <a href="#section5">Recursion</a>
+    </div>
+    <div id="main">
+        <br>
+        <a id="section1"></a>
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+        <h1>Object Oriented Programming (OOP)</h1>
+        <hr>
+    <h4>What is OOP?</h4>
+        <p>
+            Object Oriented programming, also known as OOP, is a way to simulate real-life situations through software.
+            Rather than functions and logic involved in a typical program, OOP is a way to use coding to design data using objects.
+        </p>
+        <p>
+            Objects are instances of classes. An object is a specific entity made from a class that can be manipulated. Each object has behaviours defined by the class that created it.
+            In order to create an object, a class is needed.
+            A Class is an implementation/blueprint for creating objects with the same behaviour and defined attributes.
+            Every instance of a class is assigned to an identifier variable. You will use that identifier to access the attributes and behaviors of the object.
+            Attributes and behaviors of the object refer to the instance variables and methods respectively.
+            Every single object has their own attributes and behaviors as per the class that it has instantiated.
+        </p>
+        <p>Lesson on OOP</p>
+        <p>Lesson on OOP</p>
+        <p>Lesson on OOP</p>
+        <p>Lesson on OOP</p>
+        <p>Lesson on OOP</p>
+        <p>Lesson on OOP</p>
+        <p>Lesson on OOP</p>
+        <p>Lesson on OOP</p>
+        <p>Lesson on OOP</p>
+        <p>Lesson on OOP</p>
+        <p>Lesson on OOP</p>
+        <p>Lesson on OOP</p>
+
+    <h4>Inheritance</h4>
+
+    <h4>Polymorphism</h4>
+
+        <h1 id="section2">Arrays</h1>
+        <hr>
+    <h4>Array Creation and Accessing Arrays</h4>
+        <p>When array is created with <b>new</b> keyword, elements within the array are initialized to: 0 for an array of integers, 0.0 for an array of doubles, false for an array of booleans, and null for elements of reference type.</p>
+        <p>This is an example of how to declare an array: </p>
+            <pre>
+            DataType[] arrayName = new DataType[n]; //n is the length of the array
+            //declaring an array of intergers with length 10
+            int[] arr = new int[10];
+            </pre>
+        <p>In this array of integers, there are 10 elements and elements are all initialized as 0.</p>
+        <p>You can then add values to the array using a for loop such as this:</p>
+            <pre>
+            for (int i = 0; i &lt; arr.length; i++) {
+                arr[i] = i;
+            }
+            </pre>
+        <p>If you want to initialize values of an array at the time of declaration, simply do this: </p>
+            <pre>
+            int array[] = { 1, 2, 3, 4, 5 };
+            </pre>
+        <p>The length of an array is final cannot be changed after the array is created.</p>
+
+    <h4>Traversing Arrays</h4>
+        <p>Elements of an array are accessed by: </p>
+            <pre>
+            array[index];
+            </pre>
+        <p>You can use the Arrays.length property to get the length of an array.</p>
+        <p>An array starts at index 0, then index 1, index 2, and so on. In the int array[] shown above, array[0] would be 1, array[1] would be 2, and so on.</p>
+        <p>There are two ways of traverse an array by using for loops.</p>
+        <p>Either you use the standard for loop: </p>
+            <pre>
+            for (int i = 0; i &lt; array.length; i++) {
+                System.out.println(array[i])
+            }
+            </pre>
+        <p>Or you use a for-each loop:</p>
+            <pre>
+            for (int x : array){
+                System.out.println(x);
+            }
+            </pre>
+        <p>You can only change the values of an array in a standard for loop. It does not work with the for each loop.</p>
+        <p>There is also a way to display an array without using for loops. It is done using the Arrays.toString() method: </p>
+            <pre>
+            System.out.println(array.toString());
+            </pre>
+    <h4>2D Arrays</h4>
+    <p>A 2D array is very similar to a standard array, where it is also created using the <b>new</b> keyword, and elements within the 2D array are also initialized to the default value unless specified otherwise.</p>
+        <p>This is how you declare a 2D array: </p>
+            <pre>
+            DataType[][] nameOf2DArray = new DataType[rows][columns];
+            //declaring a 2D array of integers with 5 rows and 5 columns
+            int[][] arr2D = new int[5][5];
+            </pre>
+        <p>You can also initialize values of a 2D array at the time of declaration like arrays: </p>
+            <pre>
+                                    ↓ columns
+            int[][] arr2D = {{1, 2, 3, 4, 5},   //row index 0
+                             {6, 7, 8, 9, 0},   //row index 1
+                    rows ->  {1, 3, 4, 8, 5},   //row index 2
+                             {7, 3, 2, 5, 1},   //row index 3
+                             {4, 2, 5, 8, 9}}   //row index 4
+                              0  1  2  3  4
+                              //column index
+            </pre>
+        <p>The number of rows in a 2D array is found with the 2Darray.length property.</p>
+        <p>The number of columns in a 2D array is found with the 2Darray[0].length property.</p>
+
+    <h4>Traversing 2D Arrays</h4>
+        <p>Elements in a 2D array are accessed by: </p>
+            <pre>
+            array[row][column];
+            </pre>
+        <p>There are two orders of traversing a 2D Array, row-major order and column-major order. Similar to arrays, you can traverse 2D arrays using either a nested for loop, or for each loop.</p>
+        <p>For row-major order: First you visit each row, then each column.
+        <p>The outer loop is for rows, the inner loop is for columns.</p>
+        <p>Nested for loop: </p>
+            <pre>
+            for(int i = 0; i &lt; arr2D.length; i++){
+                for(int j = 0; j &lt; arr2D[0].length; j++){
+                    System.out.println(arr2D[i][j]);
+                }
+            }
+            </pre>
+        <p>For each loop: </p>
+            <pre>
+            for(String[] row: arr2D){
+                for(String element: row){
+                    System.out.print(element);
+                }
+            }
+            </pre>
+        <p>For column-major order: First you visit each column, then each row.</p>
+        <p>The outer loop is for columns, the inner loop is for rows.</p>
+        <p>Nested for loop: </p>
+            <pre>
+            for(int j = 0; j &lt; arr2D[0].length; j++){
+                for(int i = 0; i &lt; arr2D.length; i++){
+                    System.out.println(arr2D[i][j]);        
+                }
+            }
+            </pre>
+        <p>For each loops are not possible for column-major order.</p>
+
+        <h1 id="section3">ArrayLists</h1>
+        <hr>
+    <h4>ArrayList Declaration</h4>
+        <p>You declare an ArrayList in this format: </p>
+            <pre>
+            ArrayList<DataType> variableName = new ArrayList<DataType>();
+            </pre>
+        <p>If you want to set a length to your ArrayList, you use this format where n is the length of the ArrayList: </p>
+            <pre>
+            ArrayList<DataType> variableName = new ArrayList<DataType>(n);
+            </pre>
+        <p>ArrayLists are mutable, meaning they can be changed, including their size (They have dynamic sizes).</p>
+        <p>They are not designed for storing primitive data types, more or so they are used for storing reference data types.</p>
+
+    <h4>ArrayList Methods</h4>
+        <p>ArrayList is a class that contains methods, which can be used by importing java.util.ArrayList</p>
+        <p>Here is a list of ArrayList methods and what they do:</p>
+        <p>size() method</p>
+        <p>add(E obj)</p>
+        <p>add(int index, E obj)</p>
+        <p>remove(int index)</p>
+        <p>set(int index, obj)</p>
+        <p>get(int index)</p>
+
+    <h4>Traversing Arrays</h4>
+        <p>To access elements in ArrayList using a for loop, you need to use the get() method.</p>
+        <p>Example code of traversing an ArrayList and removing any values in the ArrayList less than 70: </p>
+            <pre>
+            for(int i = arrayList.size() - 1; i &gt;= 0; i--){
+                if(arrayList.get(i) &lt; 70.0){
+                    arrayList.remove(i);
+                }
+            }
+            </pre>
+
+        <h1 id="section4">Searching & Sorting</h1>
+        <hr>
+        <p>Lesson on Searching and Sorting</p>
+
+    <h4>Binary Search</h4>
+
+    <h4>Insertion Sort</h4>
+
+    <h4>Selection Sort</h4>
+
+        <h1 id="section5">Recursion</h1>
+        <hr>
+    <h4>Merge Sort</h4>
+        <p>Lesson on Recursion</p>
+
+    </div>
+
+    <div id="footer">
+        <div id="credits">
+            Contact at: lyi972007@gmail.com &nbsp;
+            © 2023 - Leo Yi
+        </div>
+        <div id="outerline"><div id="innerline" onclick="click()"></div></div>
+    </div>
+</body>
