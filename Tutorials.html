@@ -45,22 +45,72 @@
             Attributes and behaviors of the object refer to the instance variables and methods respectively.
             Every single object has their own attributes and behaviors as per the class that it has instantiated.
         </p>
-        <p>Lesson on OOP</p>
-        <p>Lesson on OOP</p>
-        <p>Lesson on OOP</p>
-        <p>Lesson on OOP</p>
-        <p>Lesson on OOP</p>
-        <p>Lesson on OOP</p>
-        <p>Lesson on OOP</p>
-        <p>Lesson on OOP</p>
-        <p>Lesson on OOP</p>
-        <p>Lesson on OOP</p>
-        <p>Lesson on OOP</p>
-        <p>Lesson on OOP</p>
 
     <h4>Inheritance</h4>
 
     <h4>Polymorphism</h4>
+        <p>
+        Polymorphism adds on to inheritance, in that it uses the inherited methods to perform certain tasks.
+        More specifically, it is the act of executing an overidden non-static method from a class at runtime based on the actual object type.
+        </p>
+        <p>A Method is polymorphic when its overridden in at least one subclass.</p>
+
+        When object of a super class is set to reference object of a sub class, calling overridden methods will refer to those in the subclass.
+        However, to call a method that’s exclusively in the subclass, you have to downcast the object: 
+        <pre>
+        ((subclass) obj).getMethod();
+        </pre>
+        Otherwise, a compile error will occur.
+        <p>At compile-time, methods in or inherited by declared type (left of equal sign type) determine correctness of non-static method call.</p>
+        <p>At run-time, the method is executed from class of the actual type (right of equal sign) for a non-static method call.</p>
+
+        <p>Here is some sample code that including polymorphism: </p>
+        <pre>
+        //Animal Super CLass
+        public class Animal {
+            public void animalSound() {
+                System.out.println("The animal makes a sound.");
+            }
+        }
+        //Cat Sub Class which extends Animal
+        public class Cat extends Animal {
+            public void animalSound() {
+                System.out.println("The cat goes meow.");
+            }
+        }
+        //Dog Sub Class which extends Animal
+        public class Dog extends Animal {
+            public void animalSound() {
+                System.out.println("The dog goes woof.");
+            }
+            public void animalSound2() {
+                System.out.println("The dog barks.");
+            }
+        }
+        //Driver Class
+        public class Driver {
+            public static void main(String[] args) {
+                Animal myAnimal = new Animal();  // Create a Animal object
+                Animal myCat = new Cat();  // Create a Pig object
+                Animal myDog = new Dog();  // Create a Dog object
+                myAnimal.animalSound();
+                myCat.animalSound();
+                myDog.animalSound();
+                ((Dog) myDog).animalSound2();
+            }
+        }
+        </pre>
+        <p>
+        The above code has three classes and a driver class.
+        The Animal class is the super class, and the Cat and Dog classes are sub classes extend/inherit from the Animal super class.
+        </p>
+        <p>
+            When myAnimal.animalSound(); is ran, "The animal makes a sound." is printed. 
+            When myCat.animalSound(); is ran, "The cat goes meow." is printed.
+            When myDog.animalSound(); is ran, "The dog goes woof." is printed.
+            When ((Dog) myDog).animalSound2(); is ran, "The dog barks."
+            If you run myDog.animalSound2(); without downcasting, the code would not compile because the Animal type cannot access the animalSound2 method in the Dog sub class.
+        </p>
 
         <h1 id="section2">Arrays</h1>
         <hr>
@@ -208,7 +258,32 @@
         <p>Lesson on Searching and Sorting</p>
 
     <h4>Binary Search</h4>
-
+        <p>Binary search is an efficient algorithm used for finding an element in sorted array/ArrayList. Binary search works only and only if the array is sorted.</p>
+        <p>Below is sample code of Binary Search for integer: </p>
+        <pre>
+        public static int binarySearch(int[] arr, int target, int low, int high) {
+            if(low > high) {
+                return -1;
+            }
+            int mid = (low + high)/2;
+            while(low &lt;= high ){  
+               if (arr[mid] &lt; target){  
+                 low = mid + 1;
+               }else if (arr[mid] == target){  
+                 System.out.println("Element is found at index: " + mid);  
+                 break;
+               }else{  
+                  high = mid - 1;
+               }  
+               mid = (low + high)/2;  
+            }
+        }
+        </pre>
+        <p>First, you find the middle value of the low and high positions. Then you compare the middle value to the target value (The value you are looking for).</p>
+        <p>Based on whether the middle value is less or more than the target, the low position will be moved up, or the high position down.</p>
+        <p>Once the middle value is equal to the target value, the index of the middle value will be returned.</p>
+        <p>Once the low position crosses the high position, the entire array has been searched, but no value was found, so -1 is returned.</p>
+    
     <h4>Insertion Sort</h4>
 
     <h4>Selection Sort</h4>

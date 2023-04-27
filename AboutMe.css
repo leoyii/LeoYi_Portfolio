@@ -40,6 +40,7 @@ body{ /* css for body */
   #homepage{/* css for the homepage button in the nav bar */
     background-color: rgb(11, 52, 105);
   }
+  
   #footer{
     border: none; /*  rgb(11, 52, 105); rgb(75, 75, 75);*/
     background-color: rgb(75, 75, 75);
