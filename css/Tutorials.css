@@ -8,13 +8,13 @@ body{ /* css for body */
   li{/* css for general list items*/    
     float: left;
   }
-  
-  li#logo{ /* css for the logo */
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 20px 25px;
-    text-decoration: none;
+
+  .logo{ /* css for the logo picture */
+    width: 50px;
+    height: 45px;
+    float: right;
+    padding-right: 10px;
+    padding-top: 10px;
   }
 
   .navbar {

@@ -26,14 +26,12 @@ body{ /* css for body */
     background-color: #1d1d1d;;
   }
   
-  #logopic{ /* css for the logo picture */
-    width: 100px;
-    height: 75px;
-    margin: -30px -25px;
-  }
-  
-  #homepage{/* css for the homepage button in the nav bar */
-    background-color: rgb(11, 52, 105);
+  .logo{ /* css for the logo picture */
+    width: 50px;
+    height: 45px;
+    float: right;
+    padding-right: 10px;
+    padding-top: 10px;
   }
 
   * {
@@ -111,6 +109,13 @@ body{ /* css for body */
     transform: translate(-50%, -50%);
     color: white;
     opacity: 0.5;
+  }
+
+  .about{
+    position: absolute;
+    bottom: 0%;
+    padding-left: 5%;
+    color: white;
   }
   
   #footer{
