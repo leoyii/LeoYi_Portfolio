@@ -256,7 +256,6 @@
 
         <h1>Searching & Sorting</h1>
         <hr>
-        <p>Lesson on Searching and Sorting</p>
 
     <h4>Binary Search</h4>
         <p>Binary search is an efficient algorithm used for finding an element in sorted array/ArrayList. Binary search works only and only if the array is sorted.</p>
@@ -285,16 +284,87 @@
         <p>Once the middle value is equal to the target value, the index of the middle value will be returned.</p>
         <p>Once the low position crosses the high position, the entire array has been searched, but no value was found, so -1 is returned.</p>
     
-    <h4>Insertion Sort</h4>
-        
     <h4>Selection Sort</h4>
+        <p>Selection sort is a search-and-swap algorithm, this means that it will search for a value and swap that value.</p>
+        <p>In the case of selection sort, it is similar to sequential search, the sort will first traverse the array for the lowest value. 
+            Once it finds the lowest value, it will swap its position in the array with the data at index 0.
+            Now the first element is sorted and in the correct position.</p>
+        <p>This process then repeats for index 1 and so on. The rest of the array will be searched for the lowest value excluding the values already sorted.</p>
+        <p>Note that if the lowest value is already in the correct position, it will stay there and nothing is swapped.</p>
+        <p>Below is an example implementation of Selection Sort: </p>
+        <pre>
+        public void selectionSort(int[] arr){
+            for (int i = 0; i &lt; arr.length - 1; i++) {
+                int pos = i;
+                for (int j = i + 1; j &lt; numbers.length; j++) {
+                    if (arr[j] &lt; arr[pos]) {
+                        pos = j;
+                    }
+                }
+                int temp = arr[i];
+                arr[i] = arr[pos];
+                arr[pos] = temp;
+            }
+        }
+        </pre>
+        <p>In this example, pos is the position/index of the smallest element in the array. 
+            The inner for loop checks for the smallest element in the array and assigns its index to pos.
+            the element at index pos is then set to be the first value of the array, while the initial first value is assigned to a temp variable and then set at the index pos.</p>
 
+    <h4>Insertion Sort</h4>
+        <p>Rather than traversing the entire array like selection sort, insertion sort is a little less intuitive.</p>
+        <p>This sort compares the two elements and, depending on the comparison, it inserts the second value "in front" of the first value, moving the first value to the index of the second value. Then it compares the second and third, third and fourth, and so on.</p>
+        <p>This process is also then repeated until the entire array is sorted</p>
+        <p>Note that here, like selection sort, an already sorted element will remain in its position.</p>
+        <p>Here is an example implementation of Insertion Sort: </p>
+        <pre>
+        public void insertionSort(int[] arr) {
+            for (int i = 1; i &lt; arr.length; i++) {
+                int temp = arr[i];
+                int j = i - 1;
+                while (j &gt;= 0 && arr[j] &gt; temp) {
+                    arr[j + 1] = arr[j];
+                    j--;
+                }
+                arr[j + 1] = temp;
+            }
+        }
+        </pre>
+        <p>In this example, temp is the second value in the array is assigned to temp. 
+            If the first value at index j is larger than the second value (temp), then the first value becomes the second value and the second value becomes the first value.
+            If the second value is larger than the first value, then nothing changes.   </p>
         <h1 id="section5">Recursion</h1>
         <hr>
     <h4>Introduction</h4>
+        <p>Recursion is a programming technique where a method invokes itself to solve a problem by breaking it down into smaller, simpler sub problems. 
+        All recursive methods contain two components the <b>base case</b> and the <b>recursive case</b>.</p>
+
+        <p>The <b>base case</b> is the condition that specifies when the recursive method is stopped and returns a value.
+            It contains the simplest version of the problem that can be solved directly without further recursion.
+            The base case ensures that the recursive calls eventually terminate, so that there isn't an infinite loop of recursive calls.
+            This is why a base case is required in all recursive methods that way the method can terminate.</p>
+
+        The <b>recursive case</b> repeatedly breaks the main problem into smaller sub problems in order solve the problem.
+        This contains the recursion part of the method, as the method recursively calls itself.
+        Each recursive call is intended to handle a smaller input, slowly moving to the base case.
+
+        <p>Here is an example of recursive method factorial(), which calculates the factorial of a number.</p>
+        <pre>
+        public static int factorial(int n) {
+            if (n == 0 || n == 1) { //base case
+                return 1;
+            } else {    // Recursive case
+                return n * factorial(n - 1);
+            }
+          }
+        </pre>
+        <p>In this method, we can see that in the recursive case, the method calls itself at factorial(n-1). That is what is called a recursive call, when a method calls itself with a modified input.</p>
 
     <h4>Merge Sort</h4>
-
+        <p>Merge sort is a sorting algorithm that utilizes recursion.</p>
+        <p>Merge sort works by splitting the initial array into smaller sized sub ararys.
+        
+        </p>
     </div>
 
     <div id="footer">
