@@ -26,7 +26,7 @@ body{ /* css for body */
     background-color: #1d1d1d;;
   }
   
-  .logo{ /* css for the logo picture */
+  .logo{
     width: 50px;
     height: 45px;
     float: right;
@@ -34,30 +34,23 @@ body{ /* css for body */
     padding-top: 10px;
   }
 
-  .projects {
-    padding: 5% 10% 5% 10%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  .clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
   }
-  
-  .project-box {
+
+  .box {
     width: 40%;
+    height: 50%;
     margin-bottom: 50px;
-    padding: 20px;
-    background-color: #303030;
+    margin-top: 50px;
+    margin-left: 30%;
+    border: 5px solid black;
     border-radius: 15px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease;
-    justify-content: center;
-    align-items: center;
   }
   
-  .project-box:hover {
-    transform: scale(1.05);
-  }
-  
-  .project-box img {
+  .box img {
     width: 100%;
     height: auto;
     display: block;
@@ -65,20 +58,22 @@ body{ /* css for body */
     margin-bottom: 10px;
   }
   
-  .project-box h3 {
-    padding-left: 10px;
+  .box h3 {
+    padding-left: 30px;
     margin-top: 0;
     font-size: 5vh;
-    color: white;
+    color: black;
     transition: transform 0.3s ease;
   }
 
-  .project-box h3:hover{
+  .box h3:hover{
     transform: scale(1.05);
   }
   
-  .project-box p {
-    color: #ffffff;
+  .box p {
+    padding-left: 20px;
+    padding-right: 10px;
+    color: black;
   }
 
   #footer{
