@@ -115,6 +115,7 @@ body{ /* css for body */
     position:absolute;
     bottom: 0;
     padding-left: 5%;
+    padding-right: 5%;
     color: white;
   }
   

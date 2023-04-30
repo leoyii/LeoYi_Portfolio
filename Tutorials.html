@@ -29,7 +29,7 @@
     <div id="main">
         <br>
         <a id="section1"></a>
-        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+        <span style="font-size:30px;cursor:pointer;background-color:rgb(70,70,70);position:fixed;border-radius:15px;width:130px;height:45px;color:white;padding-left:5px;" onclick="openNav()">&#9776; Menu</span>
         <h1>Object Oriented Programming (OOP)</h1>
         <hr>
     <h4>What is OOP?</h4>
@@ -45,8 +45,73 @@
             Attributes and behaviors of the object refer to the instance variables and methods respectively.
             Every single object has their own attributes and behaviors as per the class that it has instantiated.
         </p>
+        <p>Here is an example of how you would create an object of the Person class: </p>
+        <pre>
+        Person p1 = new Person("Bob");
+        </pre>
+        <p>In this example, p1 is an object created from the Person class and has taken parameter of "Bob" which is the name of the person (attribute of the object).</p>
+
+    <h4>Encapsulation</h4>
+    <p>Encapsulation is when the variables and methods are integrated as a single unit and making it so other classes cannot access them, and only the methods of the original class can.
+        These are the two modifiers used for Encapsulation: </p>
+        <p><b>public:</b> A public variable or method can be accessed and modified by any and all classes in the program.</p>
+        <p><b>private:</b> A private variable can only be accessed within the same class it is declared in and cannot be accessed or modified by other classes.</p>
 
     <h4>Inheritance</h4>
+
+    <p>Inheritance is when you create a subclass that extends the super class. 
+        A subclass inherits all the properties and methods from a main class, saving you the time of having to rewrite code.</p>
+    <img src="img/inheritance.png">
+    <p>
+        In the hierarchy chart above, Shape is the main class that is inherited from. 
+        It has subclasses: triangle, right triangle and quadrilateral, rectangle, square respectively. 
+        The arrows symbolizing the inhertiance from the parent classes. 
+        You can see that triangle inherits from shape and right triangle inherits from triangle. 
+        However, quadrilateral, rectangle, and square are separate from triangle and right triangle. 
+        This means that they cannot inherit or access each others properties.
+    </p>
+    <p>The <b>super</b> keyword is used to refer to the superclass within a subclass.
+        It is used to access the superclass's constructor, methods, and/or attributes.</p>
+    <p>The <b>this</b> keyword refers to the current instance of a class. 
+        It is used within a class to refer to its own instance variables or methods as opposed to the ones inherited.</p>
+    <p>Here is a simplified coded version of the inheritance chart above: </p>
+    <pre>
+    public class Shape {    //Shape class
+        private String shape;   //variable
+        public Shape(String name) { //constructor
+            shape = name;
+        }
+        public void getShape(){ //getShape method
+            System.out.println("This is a " + shape);
+        }
+    }
+
+    public class Triangle extends Shape {   //Triangle subclass inherits from Shape superclass
+        private int base;   //variables
+        private int height;
+        public Triangle(String name, int b, int h) {    //constructor
+            super(name);    //super
+            base = b;
+            height = h;
+        }
+    }
+
+    public class Driver {   //Driver class
+        public static void main(String[] args) {    //main method
+            Shape s = new Shape("Circle");  //objects
+            Triangle t = new Triangle("Equilateral Triangle", 3, 6);
+            s.getShape();   //methods
+            t.getShape();
+        }
+    }
+    </pre>
+    <p>In this code, we can see that super(name) is called in the triangle subclass. 
+        We can also see that there is no method in the Triangle class.
+        However, when t.getShape() is ran, "Equilateral Triangle" is printed because the getShape() method is inherited from the Shape superclass.</p>
+
+    <h4>Method Overriding and Overloading</h4>
+        <p><b>Method Overriding</b> is when you create a method in the subclass that is the same as the parent class and modify it to be used for the subclass.</p>
+        <p><b>Method Overloading</b> is the process of creating multiple methods with the same name in the same class, but different parameters.</p>
 
     <h4>Polymorphism</h4>
         <p>
@@ -66,7 +131,7 @@
 
         <p>Here is some sample code that including polymorphism: </p>
         <pre>
-        //Animal Super CLass
+        //Animal Super Class
         public class Animal {
             public void animalSound() {
                 System.out.println("The animal makes a sound.");
@@ -110,6 +175,14 @@
             When myDog.animalSound(); is ran, "The dog goes woof." is printed.
             When ((Dog) myDog).animalSound2(); is ran, "The dog barks."
             If you run myDog.animalSound2(); without downcasting, the code would not compile because the Animal type cannot access the animalSound2 method in the Dog sub class.
+        </p>
+
+    <h4>Abstraction</h4>
+        <p>Abstraction is the use of abstract classes and interfaces.
+            Abstract classes cannot be instantiated and serve as a blueprint for derived classes. 
+            An abstract class allows you to create functionality that subclasses can implement or override. 
+            An interface only allows you to define functionality, but subclasses cannot implement it.
+            They require a specific set of methods that the implementing classes must provide.
         </p>
 
         <h1 id="section2">Arrays</h1>
@@ -235,12 +308,12 @@
     <h4>ArrayList Methods</h4>
         <p>ArrayList is a class that contains methods, which can be used by importing java.util.ArrayList</p>
         <p>Here is a list of ArrayList methods and what they do:</p>
-        <p>size() method</p>
-        <p>add(E obj)</p>
-        <p>add(int index, E obj)</p>
-        <p>remove(int index)</p>
-        <p>set(int index, obj)</p>
-        <p>get(int index)</p>
+        <p>size() method - returns how many elements are in the ArrayList.</p>
+        <p>add(Element obj) - adds an element to the end of the ArrayList.</p>
+        <p>add(int index, E obj) - adds an element to an ArrayList at index.</p>
+        <p>remove(int index) - removes the element at index.</p>
+        <p>set(int index, obj) - sets the element at index.</p>
+        <p>get(int index) - returns the element at index.</p>
 
     <h4>Traversing Arrays</h4>
         <p>To access elements in ArrayList using a for loop, you need to use the get() method.</p>
