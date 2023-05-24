@@ -434,9 +434,56 @@
         <p>In this method, we can see that in the recursive case, the method calls itself at factorial(n-1). That is what is called a recursive call, when a method calls itself with a modified input.</p>
 
     <h4>Merge Sort</h4>
-        <p>Merge sort is a sorting algorithm that utilizes recursion.</p>
+        <p>Merge sort is a divide and conquer sorting algorithm that utilizes recursion.</p>
         <p>Merge sort works by splitting the initial array into smaller sized sub ararys.
-        
+            These sub arrays are then "merged" into a larger sub array until finally there is only one array.
+            At that point, the array is sorted.
+        </p>
+        <p>Here is an example code of Merge Sort:</p>
+                <pre>
+                public static void mergeSort(int[] a, int n) {
+                    if (n &lt; 2) {
+                        return;
+                    }
+                    int mid = n / 2;
+                    int[] l = new int[mid];
+                    int[] r = new int[n - mid];
+                
+                    for (int i = 0; i &lt; mid; i++) {
+                        l[i] = a[i];
+                    }
+                    for (int i = mid; i &lt; n; i++) {
+                        r[i - mid] = a[i];
+                    }
+                    mergeSort(l, mid);
+                    mergeSort(r, n - mid);
+                
+                    merge(a, l, r, mid, n - mid);
+                }
+
+                public static void merge(
+                    int[] a, int[] l, int[] r, int left, int right) {
+ 
+                    int i = 0, j = 0, k = 0;
+                    while (i &lt; left && j &lt; right) {
+                        if (l[i] &lt;= r[j]) {
+                            a[k++] = l[i++];
+                        } else {
+                            a[k++] = r[j++];
+                        }
+                    }
+                    while (i &lt; left) {
+                        a[k++] = l[i++];
+                    }
+                    while (j &lt; right) {
+                        a[k++] = r[j++];
+                    }
+                }
+                </pre>
+        <p>
+            First, all the original elements are copied to a temporary array.
+            Then, use left, right, and original pointers to compare elements at the first index in both the left and right halves.
+            The element that is smaller will be copied into the original array.
         </p>
     </div>
 
