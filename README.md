@@ -1,6 +1,6 @@
 # Leo Yi — Portfolio
 
-A concise personal portfolio for Leo Yi, an Electrical Engineering student at UBC. The design uses a Library of Ruina-inspired index and reading panel, with an original illustration based on Leo's silver Owlab Spring with black keycaps and a pink paw accent.
+A concise personal portfolio for Leo Yi, an Electrical Engineering student at UBC. The design uses Library of Ruina-inspired navigation, antique-gold corner flourishes, and an angled ink nameplate, with an original illustration based on Leo's silver Owlab Spring with black keycaps and a pink paw accent.
 
 ## Run locally
 
@@ -30,7 +30,7 @@ Project photos, game screenshots, and award certificates come from the materials
 
 The keyboard illustration uses key positions from [Owlab's published Spring layout](https://cdn.shopify.com/s/files/1/0508/8716/4061/files/spring.json?v=1682343966). The silver finish and build specifications were provided by Leo. All key press feedback is silent.
 
-The panel and navigation structure takes inspiration from the [Library of Ruina official Steam gallery](https://store.steampowered.com/app/1256670/Library_Of_Ruina/). No game UI artwork is used. Self-hosted fonts and their SIL Open Font Licenses are in `assets/`.
+The panel and navigation structure takes inspiration from the [Library of Ruina official Steam gallery](https://store.steampowered.com/app/1256670/Library_Of_Ruina/). The corner flourishes and ink label are original SVG artwork; the name and program remain selectable text. No game UI artwork is used. Self-hosted fonts and their SIL Open Font Licenses are in `assets/`.
 
 ## Hosting
 
