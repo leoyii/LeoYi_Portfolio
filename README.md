@@ -19,7 +19,7 @@ Open `http://localhost:4173`.
 - Three Q-SITE Hacks 2026 certificates.
 - A short interests paragraph, one link per external destination. The space beside About is reserved for a future portrait.
 - A silver Spring SVG with smooth case contours, a centered black-and-white braided coil cable, Alice geometry and a build-specification panel that opens on hover, focus, or click. Details include broken-in Cherry MX Hyperglide Blacks, gold-plated 65 g replacement springs, WoB keycaps, and Durock screw-in stabilizers.
-- Bottom-right page curls on navigation and project tabs; a brief page flip affects only the clicked tab. Section links and project content update normally.
+- Bottom-right page curls on navigation and project tabs show the selected color underneath. Clicking continues the curl across the tab to reveal that color. The current tab is disabled; section links and project content update normally.
 - Responsive navigation, visible focus states, certificate dialog focus restoration, reduced-motion support, and local fonts.
 
 Edit `index.html` for profile/contact text, the `projects` array in `script.js` for project content, and `styles.css` for layout and colors.

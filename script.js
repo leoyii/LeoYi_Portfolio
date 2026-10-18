@@ -163,29 +163,105 @@ const asset = name => `assets/${name}.webp`;
 let selectedProject = projects[0].id;
 
 const reducedPageMotion = matchMedia('(prefers-reduced-motion: reduce)');
-const tabFlipTimers = new WeakMap();
-function addPageCorner(element) {
-  const corner = document.createElement('i');
-  corner.className = 'page-corner';
-  corner.setAttribute('aria-hidden', 'true');
-  element.append(corner);
-}
+const tabPapers = new Map();
+let paperId = 0;
+const currentTab = tab => tab.disabled || tab.getAttribute('aria-disabled') === 'true';
 
-// Only the clicked tab turns; content and navigation update immediately.
-function flipTab(tab) {
-  clearTimeout(tabFlipTimers.get(tab));
-  tab.classList.remove('tab-flipping');
-  if (reducedPageMotion.matches) return;
-  void tab.offsetWidth;
-  tab.classList.add('tab-flipping');
-  tabFlipTimers.set(tab, setTimeout(() => tab.classList.remove('tab-flipping'), 440));
+// Clip a rectangular page along its moving diagonal crease.
+function clipPaper(points, crease, keepTop) {
+  const result = [];
+  for (let i = 0; i < points.length; i++) {
+    const a = points[i], b = points[(i + 1) % points.length];
+    const da = a.x + a.y - crease, db = b.x + b.y - crease;
+    const aInside = keepTop ? da <= 0 : da >= 0;
+    const bInside = keepTop ? db <= 0 : db >= 0;
+    if (aInside) result.push(a);
+    if (aInside !== bInside) {
+      const t = da / (da - db);
+      result.push({x:a.x + t * (b.x - a.x), y:a.y + t * (b.y - a.y)});
+    }
+  }
+  return result;
 }
-reducedPageMotion.addEventListener('change', event => {
-  if (event.matches) $$('.tab-flipping').forEach(tab => {
-    clearTimeout(tabFlipTimers.get(tab));
-    tab.classList.remove('tab-flipping');
-  });
+function drawPaper(state, crease) {
+  const {width:w,height:h} = state.paper.getBoundingClientRect();
+  const rectangle = [{x:0,y:0},{x:w,y:0},{x:w,y:h},{x:0,y:h}];
+  const front = clipPaper(rectangle,crease,true);
+  const back = clipPaper(rectangle,crease,false).map(p => ({x:crease-p.y,y:crease-p.x}));
+  state.face.style.clipPath = front.length >= 3 ? `polygon(${front.map(p => `${p.x}px ${p.y}px`).join(',')})` : 'polygon(0 0,0 0,0 0)';
+  state.fold.setAttribute('points',back.map(p => `${p.x},${p.y}`).join(' '));
+  state.svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
+  state.gradient.setAttribute('x1',crease-h);
+  state.gradient.setAttribute('y1',crease-w);
+  state.gradient.setAttribute('x2',(crease+w-h)/2);
+  state.gradient.setAttribute('y2',(crease-w+h)/2);
+}
+function hidePaper(state) {
+  cancelAnimationFrame(state.frame);
+  state.running = false;
+  state.paper.hidden = true;
+  state.tab.classList.remove('is-curled','is-peeling');
+}
+function syncTabPaper(tab) {
+  const state = tabPapers.get(tab);
+  if (!state || state.running) return;
+  if (currentTab(tab) || !(state.hover || tab.matches(':focus-visible'))) {
+    hidePaper(state);
+    return;
+  }
+  state.paper.hidden = false;
+  tab.classList.add('is-curled');
+  const {width,height} = state.paper.getBoundingClientRect();
+  drawPaper(state,width+height-(innerWidth<=560 ? 20 : 24));
+}
+function addPageCorner(tab) {
+  const label = document.createElement('span');
+  label.className = 'tab-label';
+  if (tab.matches('.index-rail nav a')) tab.querySelector('span')?.classList.add('nav-number');
+  label.append(...tab.childNodes);
+  const paper = document.createElement('span');
+  const id = `paper-shade-${++paperId}`;
+  paper.className = 'tab-paper';
+  paper.hidden = true;
+  paper.setAttribute('aria-hidden','true');
+  paper.innerHTML = `<span class="tab-old-face"></span><svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><defs><linearGradient id="${id}" gradientUnits="userSpaceOnUse"><stop stop-color="#d4bb90"/><stop offset=".55" stop-color="#bd9e6c"/><stop offset=".84" stop-color="#ecdbb5"/><stop offset=".96" stop-color="#9d8058"/><stop offset="1" stop-color="#594431"/></linearGradient></defs><polygon fill="url(#${id})"/></svg>`;
+  tab.append(label,paper);
+  const state = {tab,paper,face:paper.querySelector('.tab-old-face'),svg:paper.querySelector('svg'),fold:paper.querySelector('polygon'),gradient:paper.querySelector('linearGradient'),hover:false,running:false,frame:0};
+  tabPapers.set(tab,state);
+  tab.addEventListener('pointerenter',event => {if(event.pointerType==='mouse'){state.hover=true;syncTabPaper(tab);}});
+  tab.addEventListener('pointerleave',() => {state.hover=false;syncTabPaper(tab);});
+  tab.addEventListener('focus',() => syncTabPaper(tab));
+  tab.addEventListener('blur',() => syncTabPaper(tab));
+}
+function peelTab(tab) {
+  if (currentTab(tab)) return;
+  const state = tabPapers.get(tab);
+  for (const other of tabPapers.values()) if (other.running) hidePaper(other);
+  if (reducedPageMotion.matches) {hidePaper(state);return;}
+  state.running = true;
+  state.paper.hidden = false;
+  tab.classList.add('is-curled','is-peeling');
+  const {width,height} = state.paper.getBoundingClientRect();
+  const startCrease = width+height-(innerWidth<=560 ? 20 : 24);
+  const start = performance.now();
+  function frame(now) {
+    const t = Math.min(1,(now-start)/640);
+    const eased = t*t*(3-2*t);
+    drawPaper(state,startCrease*(1-eased));
+    if (t<1) state.frame=requestAnimationFrame(frame);
+    else {hidePaper(state);syncTabPaper(tab);}
+  }
+  drawPaper(state,startCrease);
+  state.frame=requestAnimationFrame(frame);
+}
+reducedPageMotion.addEventListener('change',() => {
+  for (const state of tabPapers.values()) {hidePaper(state);syncTabPaper(state.tab);}
 });
+addEventListener('resize',() => {
+  for (const state of tabPapers.values()) {hidePaper(state);syncTabPaper(state.tab);}
+});
+addEventListener('pagehide',() => {for (const state of tabPapers.values()) hidePaper(state);});
+
 
 const mediaSizes = {'recovery-claw':[424,573],'the-shutter':[1049,292],'sumobot':[1051,1400],'sumobot-wiring':[1051,1400],'sumobot-cad':[686,381],'vex-side':[1400,1050],'vex-front':[1050,1400],'chrono-crusader':[942,354],'cardboard-chair':[1358,1011],'pen-planter':[1183,665]};
 const splitAlts = {shutter:['The Shutter camera gameplay','The Shutter in-game computer puzzle'],chrono:['Chrono Crusader time portal','Chrono Crusader platforming level']};
@@ -205,14 +281,16 @@ function renderProject() {
     const active = button.dataset.project === selectedProject;
     button.classList.toggle('active',active);
     button.setAttribute('aria-pressed',String(active));
+    button.disabled = active;
+    syncTabPaper(button);
   });
 }
 $('#project-list').innerHTML = projects.map(p => `<button type="button" class="project-item" data-project="${p.id}" aria-pressed="false"><span class="project-number">${p.number}</span><span><span class="project-name">${p.title}</span><span class="project-type">${p.categoryLabel}</span></span></button>`).join('');
 $$('.project-item').forEach(addPageCorner);
 $('#project-list').addEventListener('click',event => {
   const button = event.target.closest('[data-project]');
-  if (!button) return;
-  flipTab(button);
+  if (!button || currentTab(button)) return;
+  peelTab(button);
   selectedProject = button.dataset.project;
   renderProject();
 });
@@ -293,22 +371,30 @@ navLinks.forEach(link => {
   addPageCorner(link);
   link.addEventListener('click', event => {
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    flipTab(link);
+    if (currentTab(link)) {event.preventDefault();return;}
+    peelTab(link);
   });
 });
 function updateNavigation() {
   const nearBottom = innerHeight + scrollY >= document.documentElement.scrollHeight - 25;
   let current = 'about';
-  for (const id of ['about','projects','awards','contact']) if (document.getElementById(id).getBoundingClientRect().top <= Math.max(140,innerHeight*.25)) current = id;
+  for (const id of ['about','projects','awards','contact']) if (document.getElementById(id).getBoundingClientRect().top <= Math.max(140,innerHeight*.4)) current = id;
   if (nearBottom) current = 'contact';
   navLinks.forEach(link => {
     const active = link.getAttribute('href') === '#'+current;
     link.classList.toggle('active',active);
     if (active) link.setAttribute('aria-current','location'); else link.removeAttribute('aria-current');
+    link.setAttribute('aria-disabled',String(active));
+    syncTabPaper(link);
   });
 }
 let scrollScheduled = false;
 addEventListener('scroll',() => { if (!scrollScheduled) {scrollScheduled = true;requestAnimationFrame(() => {updateNavigation();scrollScheduled=false;});} },{passive:true});
 addEventListener('resize',updateNavigation);
 updateNavigation();
+addEventListener('load',() => {
+  const id = location.hash.slice(1);
+  if (['about','projects','awards','contact'].includes(id)) document.getElementById(id).scrollIntoView({behavior:'instant',block:'start'});
+  updateNavigation();
+},{once:true});
 $('#year').textContent = String(new Date().getFullYear());
