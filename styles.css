@@ -77,3 +77,14 @@ main{max-width:1430px;margin-left:205px;padding:65px 66px 0}.about-section{posit
 @media(max-width:800px){.library-corner{width:84px;height:84px}.library-frame{inset:8px}.profile-heading{padding-top:19px}.nameplate{min-height:135px;padding:23px 29px}.profile-heading h1{font-size:55px}}
 @media(max-width:560px){.library-frame{inset:81px 6px 6px}.library-frame::before{inset:3px;border-radius:12px;border-color:#aa8b5033}.library-corner{width:39px;height:39px;opacity:.65}.profile-heading{padding-top:18px;padding-bottom:17px}.nameplate{min-height:128px;padding:22px 26px}.profile-heading .eyebrow{font-size:12px;letter-spacing:.45px}.profile-heading h1{font-size:52px;letter-spacing:-1.2px;margin-top:7px}}
 @media(max-width:360px){.profile-heading .eyebrow{font-size:11px}.profile-heading h1{font-size:49px}.nameplate{padding-left:24px;padding-right:20px}}
+
+/* Keep the frame on the page, with clear space around the introduction. */
+body{position:relative;min-height:100dvh;padding-bottom:28px}
+.library-frame{position:absolute;inset:11px}
+.about-section{scroll-margin-top:40px}
+.profile-heading{padding-bottom:0}
+.profile-heading h1{font-family:var(--serif)}
+.profile-layout{min-height:0;align-items:start;margin-top:4px}
+.portrait-space{min-height:0}
+@media(max-width:800px){.library-frame{inset:8px}}
+@media(max-width:560px){body{padding-bottom:20px}.library-frame{inset:81px 6px 6px;z-index:4}.profile-heading{padding-bottom:0}.profile-layout{margin-top:4px}}
