@@ -45,3 +45,11 @@ main{max-width:1430px;margin-left:205px;padding:65px 66px 0}.about-section{posit
 .sumobot-model{position:relative;width:min(100%,624px);aspect-ratio:624/364;overflow:hidden;margin:20px auto 0;border:1px solid var(--soft-line);background:#404040}
 .sumobot-model img{position:absolute;width:109.935897%;max-width:none;height:auto;left:-4.487179%;top:-3.846154%;border:0}
 @media(max-width:560px){.sumobot-photos{grid-template-columns:1fr;gap:12px}}
+
+/* VEX crops: side (220,0,1080,790), front (90,130,930,1120). */
+.vex-photo{position:relative;overflow:hidden;margin:0;border:1px solid var(--soft-line)}
+.vex-photo img{position:absolute;max-width:none;height:auto;border:0}
+.vex-photo-side{aspect-ratio:1080/790}
+.vex-photo-side img{width:129.629630%;left:-20.370370%;top:0}
+.vex-photo-front{width:min(100%,360px);aspect-ratio:930/1120;margin:20px auto 0}
+.vex-photo-front img{width:112.903226%;left:-9.677419%;top:-11.607143%}
