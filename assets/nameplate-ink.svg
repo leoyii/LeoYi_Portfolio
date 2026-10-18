@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 180" preserveAspectRatio="none">
+  <defs><filter id="ink-edge" x="-10%" y="-15%" width="120%" height="130%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".09 .28" numOctaves="3" seed="13" result="grain"/><feDisplacementMap in="SourceGraphic" in2="grain" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter></defs>
+  <g filter="url(#ink-edge)">
+    <path fill="#080808" d="M28 27 470 15 461 48 474 43 457 91 464 92 447 132 25 148 34 122 17 128 29 85 18 91 35 43 25 46Z"/>
+    <path fill="#080808" opacity=".7" d="m10 31 410-16-8 4-385 18-18 5ZM6 147l421-19-20 8-387 18-13 6ZM40 16l291-11-29 7-270 12Z"/>
+  </g>
+  <g stroke="#080808" stroke-linecap="round" opacity=".6">
+    <path d="m9 49 40-5M2 72l42-3M5 119l39-4M24 160l101-4M405 28l78-3M422 109l58-5M439 57l57-2" stroke-width="2"/>
+    <path d="m17 35 34-2M1 96l28-2M10 139l40-2M421 135l49-4M437 78l55-4"/>
+  </g>
+</svg>
