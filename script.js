@@ -161,6 +161,32 @@ const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const asset = name => `assets/${name}.webp`;
 let selectedProject = projects[0].id;
+
+const reducedPageMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const tabFlipTimers = new WeakMap();
+function addPageCorner(element) {
+  const corner = document.createElement('i');
+  corner.className = 'page-corner';
+  corner.setAttribute('aria-hidden', 'true');
+  element.append(corner);
+}
+
+// Only the clicked tab turns; content and navigation update immediately.
+function flipTab(tab) {
+  clearTimeout(tabFlipTimers.get(tab));
+  tab.classList.remove('tab-flipping');
+  if (reducedPageMotion.matches) return;
+  void tab.offsetWidth;
+  tab.classList.add('tab-flipping');
+  tabFlipTimers.set(tab, setTimeout(() => tab.classList.remove('tab-flipping'), 440));
+}
+reducedPageMotion.addEventListener('change', event => {
+  if (event.matches) $$('.tab-flipping').forEach(tab => {
+    clearTimeout(tabFlipTimers.get(tab));
+    tab.classList.remove('tab-flipping');
+  });
+});
+
 const mediaSizes = {'recovery-claw':[424,573],'the-shutter':[1049,292],'sumobot':[1051,1400],'sumobot-wiring':[1051,1400],'sumobot-cad':[686,381],'vex-side':[1400,1050],'vex-front':[1050,1400],'chrono-crusader':[942,354],'cardboard-chair':[1358,1011],'pen-planter':[1183,665]};
 const splitAlts = {shutter:['The Shutter camera gameplay','The Shutter in-game computer puzzle'],chrono:['Chrono Crusader time portal','Chrono Crusader platforming level']};
 function projectMedia(p) {
@@ -182,9 +208,11 @@ function renderProject() {
   });
 }
 $('#project-list').innerHTML = projects.map(p => `<button type="button" class="project-item" data-project="${p.id}" aria-pressed="false"><span class="project-number">${p.number}</span><span><span class="project-name">${p.title}</span><span class="project-type">${p.categoryLabel}</span></span></button>`).join('');
+$$('.project-item').forEach(addPageCorner);
 $('#project-list').addEventListener('click',event => {
   const button = event.target.closest('[data-project]');
   if (!button) return;
+  flipTab(button);
   selectedProject = button.dataset.project;
   renderProject();
 });
@@ -234,8 +262,9 @@ function springKey(k) {
  const mark = paw ? `<g transform="translate(${width/2-11} 5)"><ellipse cx="11" cy="17" rx="6.6" ry="4.7" fill="#c88394"/><ellipse cx="3" cy="9" rx="3" ry="3.7" transform="rotate(-25 3 9)" fill="#c88394"/><ellipse cx="10.4" cy="5" rx="3" ry="3.8" fill="#c88394"/><ellipse cx="18.2" cy="8" rx="3" ry="3.8" transform="rotate(25 18.2 8)" fill="#c88394"/></g>` : `<text class="key-label" x="${width/2}" y="20" text-anchor="middle" fill="#f1f1ee" font-family="Arial,sans-serif" font-size="${label.length>4?6:label.length>1?7:9}">${label === 'Space' ? '' : escapeLabel(label)}</text>`;
  return `<g data-code="${code}" transform="rotate(${k.r}) translate(${k.x*u} ${k.y*u})"><rect x="0" y="3" width="${width}" height="${height}" rx="3.2" fill="#080a0c"/><rect class="key-face" width="${width}" height="${height-2}" rx="3" fill="${face}" stroke="#4a4d50" stroke-width=".65"/><path d="M4 5h${width-8}" stroke="#ffffff16" stroke-width=".6"/>${mark}</g>`;
 }
-const springOutline = 'M30 13H158Q170 13 184 18L313 46Q330 50 347 46L466 17Q480 13 494 13H651Q671 13 675 33L690 167Q692 184 678 195L652 216Q644 223 629 223H510Q496 223 482 230L399 265Q382 272 366 266L261 233Q245 228 229 228H66Q47 228 38 212L12 128Q8 115 13 101L23 77V29Q23 13 30 13Z';
-$('#keyboard-illustration').innerHTML = `<svg viewBox="0 0 708 292" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="spring-silver" x1="0" y1="0" x2=".5" y2="1"><stop stop-color="#eef0f2"/><stop offset=".32" stop-color="#c7ccd1"/><stop offset=".65" stop-color="#a4abb2"/><stop offset="1" stop-color="#dde1e5"/></linearGradient><linearGradient id="spring-keycap" x2=".2" y2="1"><stop stop-color="#292c30"/><stop offset="1" stop-color="#111418"/></linearGradient></defs><path d="M82 17C83 -5 53 -5 44 -16" stroke="#688d57" stroke-width="5" fill="none"/><path d="${springOutline}" transform="translate(0 7)" fill="#646c74" stroke="#454d56" stroke-width="1.4"/><path d="${springOutline}" fill="url(#spring-silver)" stroke="#f5f6f7" stroke-width="1.1"/><path d="M49 218Q55 223 70 223H230Q247 223 262 229L368 261Q381 267 397 261L481 226Q497 218 512 218H630" stroke="#f9fafbcc" stroke-width="1" fill="none"/><g transform="translate(33 31)">${springGeometry.map(springKey).join('')}</g></svg>`;
+const springOutline = 'M35 13H158C172 13 179 16 191 19L313 46Q330 50 347 46L466 17Q480 13 498 13H651C665 13 672 21 674 35L688 166Q692 183 677 195L652 216Q644 223 629 223H510Q497 223 482 230L399 265Q383 272 366 266L261 233Q245 228 229 228H66Q47 228 40 211L13 128Q9 116 13 103L23 77Q25 71 25 63V29Q25 13 35 13Z';
+const springCable = "M332 51V25C332 7 303 7 303 -9C303 -26 321 -29 321 -13C321 4 309 4 309 -13C309 -30 334 -30 334 -13C334 4 322 4 322 -13C322 -30 347 -30 347 -13C347 4 335 4 335 -13C335 -30 360 -30 360 -13C360 4 348 4 348 -13C348 -30 373 -30 373 -13C373 4 361 4 361 -13C361 -30 386 -30 386 -13C386 4 374 4 374 -13C374 -30 399 -30 399 -13C399 4 387 4 387 -13C387 -30 412 -30 412 -13C412 4 400 4 400 -13C400 -29 421 -28 429 -28C464 -28 482 -41 503 -56";
+$('#keyboard-illustration').innerHTML = `<svg viewBox="0 -68 708 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="spring-silver" x1="0" y1="0" x2=".5" y2="1"><stop stop-color="#eef0f2"/><stop offset=".32" stop-color="#c7ccd1"/><stop offset=".65" stop-color="#a4abb2"/><stop offset="1" stop-color="#dde1e5"/></linearGradient><linearGradient id="spring-keycap" x2=".2" y2="1"><stop stop-color="#292c30"/><stop offset="1" stop-color="#111418"/></linearGradient></defs><g class="spring-cable" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="${springCable}" transform="translate(0 2)" stroke="#0007" stroke-width="8"/><path d="${springCable}" stroke="#d5d9dc" stroke-width="6"/><path d="${springCable}" stroke="#202429" stroke-width="4.4" stroke-dasharray="1.4 3"/><path d="${springCable}" stroke="#f6f7f8" stroke-width="1.3" stroke-dasharray="1 3.4"/></g><rect x="327" y="41" width="10" height="13" rx="2" fill="#30353b" stroke="#b9c0c6" stroke-width="1"/><path d="${springOutline}" transform="translate(0 7)" fill="#6b737c" stroke="#454d56" stroke-width="1.4" stroke-linejoin="round"/><path d="${springOutline}" fill="url(#spring-silver)" stroke="#f5f6f7" stroke-width="1.1" stroke-linejoin="round"/><path d="${springOutline}" fill="none" stroke="#ffffff45" stroke-width="2.4" stroke-linejoin="round"/><g transform="translate(33 31)">${springGeometry.map(springKey).join('')}</g></svg>`;
 const keyboardWrap = $('.keyboard-interactive'), keyboardToggle = $('#keyboard-toggle'), keyboardSpecs = $('#keyboard-specs');
 let specsPinned = false;
 function showKeyboardSpecs(open) {
@@ -260,6 +289,13 @@ document.addEventListener('keydown',event => {
   keyTimers.set(event.code,setTimeout(() => keys.forEach(k => k.classList.remove('key-pressed')),160));
 });
 const navLinks = $$('.index-rail nav a');
+navLinks.forEach(link => {
+  addPageCorner(link);
+  link.addEventListener('click', event => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    flipTab(link);
+  });
+});
 function updateNavigation() {
   const nearBottom = innerHeight + scrollY >= document.documentElement.scrollHeight - 25;
   let current = 'about';
