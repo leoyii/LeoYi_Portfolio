@@ -266,11 +266,15 @@ addEventListener('pagehide',() => {for (const state of tabPapers.values()) hideP
 const mediaSizes = {'recovery-claw':[424,573],'the-shutter':[1049,292],'sumobot':[1051,1400],'sumobot-wiring':[1051,1400],'sumobot-cad':[686,381],'vex-side':[1400,1050],'vex-front':[1050,1400],'chrono-crusader':[942,354],'cardboard-chair':[1358,1011],'pen-planter':[1183,665]};
 const splitAlts = {shutter:['The Shutter camera gameplay','The Shutter in-game computer puzzle'],chrono:['Chrono Crusader time portal','Chrono Crusader platforming level']};
 function projectMedia(p) {
+ if (p.id === 'sumo') return `<div class="sumobot-photos"><figure><img src="${asset(p.image)}" alt="${p.alt}" width="1051" height="1400"></figure><figure><img class="sumobot-wiring-photo" src="${asset('sumobot-wiring')}" alt="${p.galleryAlts[0]}" width="1051" height="1400"></figure></div>`;
+
  const [width,height] = mediaSizes[p.image];
  if (splitAlts[p.id]) return `<div class="project-screenshots">${splitAlts[p.id].map((alt,i) => `<div class="project-shot ${i ? 'project-shot-right' : ''}" style="--shot-ratio:${width/2}/${height}"><img src="${asset(p.image)}" alt="${alt}" width="${width}" height="${height}"></div>`).join('')}</div>`;
  return `<figure class="project-image-frame ${p.portrait ? 'project-image-frame-portrait' : ''}"><img class="project-image" src="${asset(p.image)}" alt="${p.alt}" width="${width}" height="${height}"></figure>`;
 }
 function projectGallery(p) {
+ if (p.id === 'sumo') return `<figure class="sumobot-model"><img src="${asset('sumobot-cad')}" alt="${p.galleryAlts[1]}" width="686" height="381" loading="lazy"></figure>`;
+
  if (!p.gallery) return '';
  return `<div class="project-gallery ${p.gallery.length===1 ? 'project-gallery-single' : ''}">${p.gallery.map((image,i) => {const [width,height] = mediaSizes[image];return `<figure><img src="${asset(image)}" alt="${p.galleryAlts[i]}" width="${width}" height="${height}" loading="lazy"></figure>`;}).join('')}</div>`;
 }

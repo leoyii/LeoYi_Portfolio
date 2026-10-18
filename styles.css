@@ -36,3 +36,12 @@ main{max-width:1430px;margin-left:205px;padding:65px 66px 0}.about-section{posit
 .index-rail nav a[aria-disabled="true"]{cursor:default;background:#3c282a;color:#f0dfba}
 .project-item:disabled{cursor:default}
 @media(prefers-reduced-motion:reduce){.tab-old-face{will-change:auto}}
+
+/* SumoBot: paired robot photos and a borderless CAD crop. */
+.sumobot-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.sumobot-photos figure{margin:0;aspect-ratio:4/3;overflow:hidden;border:1px solid var(--soft-line)}
+.sumobot-photos img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+.sumobot-photos .sumobot-wiring-photo{object-position:50% 35%}
+.sumobot-model{position:relative;width:min(100%,624px);aspect-ratio:624/364;overflow:hidden;margin:20px auto 0;border:1px solid var(--soft-line);background:#404040}
+.sumobot-model img{position:absolute;width:109.935897%;max-width:none;height:auto;left:-4.487179%;top:-3.846154%;border:0}
+@media(max-width:560px){.sumobot-photos{grid-template-columns:1fr;gap:12px}}
