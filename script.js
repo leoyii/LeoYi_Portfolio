@@ -265,13 +265,26 @@ addEventListener('pagehide',() => {for (const state of tabPapers.values()) hideP
 
 const mediaSizes = {'recovery-claw':[424,573],'the-shutter':[1049,292],'sumobot':[1051,1400],'sumobot-wiring':[1051,1400],'sumobot-cad':[686,381],'vex-side':[1400,1050],'vex-front':[1050,1400],'chrono-crusader':[942,354],'cardboard-chair':[1358,1011],'pen-planter':[1183,665]};
 const splitAlts = {shutter:['The Shutter camera gameplay','The Shutter in-game computer puzzle'],chrono:['Chrono Crusader time portal','Chrono Crusader platforming level']};
+const screenshotCrops = {chrono:[[9,5,455,339],[469,5,458,339]],shutter:[[6,3,510,286],[521,2,524,287]]};
+function croppedProjectPhoto(image,alt,[x,y,width,height],className='') {
+ const [sourceWidth,sourceHeight] = mediaSizes[image];
+ const cropStyle = `--crop-ratio:${width}/${height};--crop-width:${sourceWidth/width*100}%;--crop-left:${-x/width*100}%;--crop-top:${-y/height*100}%`;
+ return `<figure class="project-crop ${className}" style="${cropStyle}"><img src="${asset(image)}" alt="${alt}" width="${sourceWidth}" height="${sourceHeight}"></figure>`;
+}
+
 function projectMedia(p) {
+ if (p.id === 'claw') return croppedProjectPhoto(p.image,p.alt,[0,20,424,500],'claw-photo');
+
  if (p.id === 'vex') return `<figure class="vex-photo vex-photo-side"><img src="${asset(p.image)}" alt="${p.alt}" width="1400" height="1050"></figure>`;
 
  if (p.id === 'sumo') return `<div class="sumobot-photos"><figure><img src="${asset(p.image)}" alt="${p.alt}" width="1051" height="1400"></figure><figure><img class="sumobot-wiring-photo" src="${asset('sumobot-wiring')}" alt="${p.galleryAlts[0]}" width="1051" height="1400"></figure></div>`;
 
  const [width,height] = mediaSizes[p.image];
- if (splitAlts[p.id]) return `<div class="project-screenshots">${splitAlts[p.id].map((alt,i) => `<div class="project-shot ${i ? 'project-shot-right' : ''}" style="--shot-ratio:${width/2}/${height}"><img src="${asset(p.image)}" alt="${alt}" width="${width}" height="${height}"></div>`).join('')}</div>`;
+ if (splitAlts[p.id]) {
+  const crops = screenshotCrops[p.id];
+  const columns = crops.map(([, ,w,h]) => `minmax(0,${w/h}fr)`).join(' ');
+  return `<div class="project-screenshots" style="--shot-columns:${columns}">${splitAlts[p.id].map((alt,i) => croppedProjectPhoto(p.image,alt,crops[i])).join('')}</div>`;
+ }
  return `<figure class="project-image-frame ${p.portrait ? 'project-image-frame-portrait' : ''}"><img class="project-image" src="${asset(p.image)}" alt="${p.alt}" width="${width}" height="${height}"></figure>`;
 }
 function projectGallery(p) {
