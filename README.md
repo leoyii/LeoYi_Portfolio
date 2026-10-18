@@ -1,6 +1,6 @@
 # Leo Yi — Portfolio
 
-A concise personal portfolio for Leo Yi, an Electrical Engineering student at UBC. The design uses a Library of Ruina-inspired index and reading panel, with an original illustration based on Leo's cream-and-black split keyboard and pink paw keycap.
+A concise personal portfolio for Leo Yi, an Electrical Engineering student at UBC. The design uses a Library of Ruina-inspired index and reading panel, with an original illustration based on Leo's silver Owlab Spring with black keycaps and a pink paw accent.
 
 ## Run locally
 
@@ -15,10 +15,10 @@ Open `http://localhost:4173`.
 ## Contents
 
 - About, Projects, Awards, and Contact.
-- Six project selections, with the selected project's images and technical contributions shown directly in one panel.
-- Three Q-SITE Hacks 2026 certificates and the PEO admission scholarship.
-- A short interests paragraph, one résumé link, one portfolio PDF link, and one link per external destination.
-- A silent SVG keyboard illustration that briefly highlights physical key presses. No typing challenge, audio, switch picker, or color controls.
+- Six project selections in a non-sticky list. Images preserve their proportions; composite game screenshots display in separate frames, stacking on narrow screens.
+- Three Q-SITE Hacks 2026 certificates.
+- A short interests paragraph, one portfolio PDF link, and one link per external destination. The space beside About is reserved for a future portrait.
+- A silver Spring SVG with Alice geometry and a build-specification panel that opens on hover, focus, or click. Details include broken-in Cherry MX Hyperglide Blacks, gold-plated 65 g replacement springs, WoB keycaps, and Durock screw-in stabilizers.
 - Responsive navigation, visible focus states, certificate dialog focus restoration, reduced-motion support, and local fonts.
 
 Edit `index.html` for profile/contact text, the `projects` array in `script.js` for project content, and `styles.css` for layout and colors.
@@ -27,7 +27,7 @@ Edit `index.html` for profile/contact text, the `projects` array in `script.js` 
 
 Project photos, game screenshots, and award certificates come from the materials supplied by Leo. The project portfolio PDF has been optimized for the web. The Pen Planter is identified as a concept with an AI-generated rendering, as in its original source.
 
-The keyboard illustration is original SVG based on the supplied keyboard photograph; no keyboard model or switch specifications are assumed. All key press feedback is silent.
+The keyboard illustration uses key positions from [Owlab's published Spring layout](https://cdn.shopify.com/s/files/1/0508/8716/4061/files/spring.json?v=1682343966). The silver finish and build specifications were provided by Leo. All key press feedback is silent.
 
 The panel and navigation structure takes inspiration from the [Library of Ruina official Steam gallery](https://store.steampowered.com/app/1256670/Library_Of_Ruina/). No game UI artwork is used. Self-hosted fonts and their SIL Open Font Licenses are in `assets/`.
 
